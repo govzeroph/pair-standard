@@ -1,0 +1,15 @@
+id: pair-search
+name: PAIR Search
+status: building
+summary: Answers whether a civic tool for a given problem already exists, and says so plainly when none does.
+capabilities:
+  - Check whether a tool for my problem already exists before I build one
+  - Find out who is already working on something so I can join them instead
+  - See whether a tool is still maintained before I rely on it
+scope: national
+repo: https://github.com/govzeroph/pair
+tags:
+  - civic-tech
+  - registry
+  - search
+last_verified: 2026-11-12

@@ -1,0 +1,15 @@
+id: pair-submit
+name: PAIR Submit
+status: building
+summary: Lets people add a civic initiative to the public registry without needing a developer.
+capabilities:
+  - Add a civic initiative I am working on so other people can find it
+  - Turn a project's website or repository into a registry entry automatically
+  - Check that an entry is complete and correct before submitting it
+scope: national
+repo: https://github.com/govzeroph/pair
+tags:
+  - civic-tech
+  - registry
+  - open-data
+last_verified: 2026-11-12

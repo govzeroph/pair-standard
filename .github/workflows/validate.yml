@@ -1,0 +1,42 @@
+name: Validate registry
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the registry
+        uses: actions/checkout@v4
+
+      # The validator lives in the tooling repository, assumed to sit under the
+      # same owner as this one. Override with a PAIR_TOOL_REPO repository
+      # variable ("owner/repo") if it lives elsewhere.
+      - name: Check out the validator
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.PAIR_TOOL_REPO || format('{0}/pair', github.repository_owner) }}
+          ref: ${{ vars.PAIR_TOOL_REF || 'main' }}
+          path: .pair-tool
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: .pair-tool/package-lock.json
+
+      - name: Install the validator
+        run: npm ci
+        working-directory: .pair-tool
+
+      # Validation makes no network requests, so this result is identical to
+      # what a contributor sees locally.
+      - name: Validate entries
+        run: node .pair-tool/src/cli.ts check initiatives
